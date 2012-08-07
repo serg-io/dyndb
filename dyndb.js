@@ -1,5 +1,5 @@
 /*
- *  DynDB 0.0.1
+ *  DynDB 0.0.2
  *  (c) 2012 Sergio Alcantara
  */
 
@@ -40,7 +40,7 @@ function DynDB() {
 			dateStr = isoDate.substr(0, 8),
 			credentialScope = dateStr + '/' + region + '/' + SERVICE_NAME.toLowerCase() + '/aws4_request',
 			hash = crypto.createHash('sha256');
-		hash.update(body, 'utf8');
+		hash.update(body);
 
 		var canonicalRequest = httpOpts.method + '\n' +
 			encodeURI(httpOpts.path) + '\n' +
@@ -71,7 +71,8 @@ function DynDB() {
 			body = '{}';
 		}
 		body || (body = '{}');
-		if (!_.isString(body)) body = JSON.stringify(body);
+		body = new Buffer(_.isString(body) ? body : JSON.stringify(body));
+
 		var complete = _.once(function(e, jsonStr, httpResponse) {
 			var jsonResponse = !_.isEmpty(jsonStr) ? JSON.parse(jsonStr) : jsonStr;
 			if (httpResponse && httpResponse.statusCode !== 200) e = jsonResponse;
@@ -86,8 +87,7 @@ function DynDB() {
 			headers: {
 				'x-amz-date': basicISODate(new Date()),
 				'x-amz-target': SERVICE_NAME + '_' + API_VERSION + '.' + operationName,
-				'Content-Type': 'application/x-amz-json-1.0',
-				'Content-Length': body.length
+				'Content-Type': 'application/x-amz-json-1.0'
 			}
 		};
 		signRequest(httpOpts, body);
