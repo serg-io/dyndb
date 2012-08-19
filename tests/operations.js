@@ -29,7 +29,6 @@ exports.tables = {
 			if (json) existingTables = json.TableNames;
 
 			test.ok(!error, error && _.isString(error.message) ? error.message : JSON.stringify(error));
-			console.log(json);
 			test.done();
 		}, this);
 	},
@@ -84,7 +83,6 @@ exports.items = {
 		};
 		this.dyndb.request('PutItem', body, function(error, json) {
 			test.ok(!error, error && _.isString(error.message) ? error.message : JSON.stringify(error));
-			console.log(json);
 			test.done();
 		});
 	},
