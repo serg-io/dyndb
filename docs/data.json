@@ -1,0 +1,293 @@
+{
+    "project": {},
+    "files": {
+        "dyndb.js": {
+            "name": "dyndb.js",
+            "modules": {
+                "dyndb": 1
+            },
+            "classes": {
+                "DynDB": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "dyndb": {
+            "name": "dyndb",
+            "submodules": {},
+            "classes": {
+                "DynDB": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "dyndb.js",
+            "line": 13,
+            "description": "DynDB 0.0.2 - (c) 2012 Sergio Alcantara\nProvides the base DynDB constructor",
+            "author": "Sergio Alcantara"
+        }
+    },
+    "classes": {
+        "DynDB": {
+            "name": "DynDB",
+            "shortname": "DynDB",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "dyndb",
+            "namespace": "",
+            "file": "dyndb.js",
+            "line": 13,
+            "description": "DynDB Constructor.\nIt accepts the AWS access keys and the AWS region. If no arguments are passed,\nit gets the keys and region from the following environment variables:\n\n1. `AWS_ACCESS_KEY_ID`\n2. `AWS_SECRET_ACCESS_KEY`\n3. `AWS_REGION`",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "accessKeyID",
+                    "description": "Your AWS access key ID",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "secretAccessKey",
+                    "description": "Your AWS secret access key",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "region",
+                    "description": "The AWS region you would like to use",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'us-east-1'"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "dyndb.js",
+            "line": 29,
+            "description": "DynamoDB's service name used in the HTTP headers and to create the signature that authenticates every request",
+            "itemtype": "property",
+            "name": "SERVICE_NAME",
+            "type": "String",
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "DynDB",
+            "module": "dyndb"
+        },
+        {
+            "file": "dyndb.js",
+            "line": 39,
+            "description": "DynamoDB's API version used in the HTTP headers of every request",
+            "itemtype": "property",
+            "name": "API_VERSION",
+            "type": "String",
+            "final": 1,
+            "access": "private",
+            "tagname": "",
+            "class": "DynDB",
+            "module": "dyndb"
+        },
+        {
+            "file": "dyndb.js",
+            "line": 53,
+            "description": "Sets the access keys and region to use for every request. If no arguments are passed,\nit gets the keys and region from the following environment variables:\n\n1. `AWS_ACCESS_KEY_ID`\n2. `AWS_SECRET_ACCESS_KEY`\n3. `AWS_REGION`",
+            "itemtype": "method",
+            "name": "setup",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "accessKeyID",
+                    "description": "Your AWS access key ID",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "secretAccessKey",
+                    "description": "Your AWS secret access key",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "region",
+                    "description": "The AWS region you would like to use",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'us-east-1'"
+                }
+            ],
+            "class": "DynDB",
+            "module": "dyndb"
+        },
+        {
+            "file": "dyndb.js",
+            "line": 74,
+            "description": "Uses [Crypto.Hmac](http://nodejs.org/api/crypto.html#crypto_class_hmac) to calculate the SHA256 HMAC for the given data",
+            "itemtype": "method",
+            "name": "hmac",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The hmac key to be used",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "The data for which to calculate the HMAC",
+                    "type": "String"
+                },
+                {
+                    "name": "encoding",
+                    "description": "The desired output encoding for the HMAC. Can be `'hex'`, `'binary'` or `'base64'`",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'binary'"
+                }
+            ],
+            "return": {
+                "description": "The calculated HMAC value. The type of the return value depends on the given `encoding`",
+                "type": "Object"
+            },
+            "class": "DynDB",
+            "module": "dyndb"
+        },
+        {
+            "file": "dyndb.js",
+            "line": 90,
+            "description": "Uses [Crypto.Hash](http://nodejs.org/api/crypto.html#crypto_class_hash) to calculate the SHA256 hash for the given data",
+            "itemtype": "method",
+            "name": "hmac",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data from which to calculate the hash",
+                    "type": "String"
+                },
+                {
+                    "name": "dataEncoding",
+                    "description": "The data's encoding. Can be `'utf8'`, `'ascii'` or `'binary'`",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'binary'"
+                },
+                {
+                    "name": "encoding",
+                    "description": "The desired output encoding for the hash. Can be `'hex'`, `'binary'` or `'base64'`",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "'hex'"
+                }
+            ],
+            "return": {
+                "description": "The calculated hash value. The type of the return value depends on the given `encoding`",
+                "type": "Object"
+            },
+            "class": "DynDB",
+            "module": "dyndb"
+        },
+        {
+            "file": "dyndb.js",
+            "line": 106,
+            "description": "Signs a given request. Follows the [AWS signature v4](http://docs.amazonwebservices.com/general/latest/gr/signature-version-4.html) specs to add the `Authorization` header in `httpOpts`",
+            "itemtype": "method",
+            "name": "signRequest",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "httpOpts",
+                    "description": "The http options object that will be used when calling the `https.request()` method",
+                    "type": "Object"
+                },
+                {
+                    "name": "body",
+                    "description": "The `Buffer` instance of the request body",
+                    "type": "Buffer"
+                }
+            ],
+            "class": "DynDB",
+            "module": "dyndb"
+        },
+        {
+            "file": "dyndb.js",
+            "line": 141,
+            "description": "Generates an ISO8601 basic date string (`YYYYMMDD'T'HHMMSS'Z'`) for the given date instance",
+            "itemtype": "method",
+            "name": "basicISODate",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "date",
+                    "description": "A date instance. If no date is given, a `new Date()` is used",
+                    "type": "Date",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "An ISO8601 basic date string",
+                "type": "String"
+            },
+            "class": "DynDB",
+            "module": "dyndb"
+        },
+        {
+            "file": "dyndb.js",
+            "line": 156,
+            "description": "Sends a request to Amazon DynamoDB",
+            "itemtype": "method",
+            "name": "request",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "operationName",
+                    "description": "Name of the DynamoDB operation to request. Consult\n[DynamoDB documentation](http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/operationlist.html 'DynamoDB Operations')\nfor a list of available operations",
+                    "type": "String"
+                },
+                {
+                    "name": "body",
+                    "description": "Body of the request to send. If it's not a string, it is converted into a string using `JSON.stringify()`.\nConsult [DynamoDB documentation](http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/operationlist.html 'DynamoDB Operations')\nfor details about the body for each type of operation",
+                    "type": "Object|String",
+                    "optional": true,
+                    "optdefault": "'{}'"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback function to execute after the response has been received or when an error was triggered during the request.\nThe callback function should take the following arguments:",
+                    "type": "Function",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "error",
+                            "description": "This can be:\n\n1. An object, the parsed DynamoDB's error JSON string response, if the response's status code was not 200\n2. The error object passed by the underlying http request if the 'error' event was triggered\n3. Undefined if there was no error",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "json",
+                            "description": "The parsed JSON response or a string if the response is not a valid JSON string",
+                            "type": "Object|String"
+                        }
+                    ]
+                },
+                {
+                    "name": "context",
+                    "description": "The `context` in which the callback should be executed, meaning that whenever the callback function is called,\nthe value of `this`, inside the callback, will be `context`. If no `context` is given, the value of `this` would be the underlying request's\n[http.ClientResponse](http://nodejs.org/api/http.html#http_http_clientresponse) object, which contains data like `statusCode` and `headers`",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "class": "DynDB",
+            "module": "dyndb"
+        }
+    ]
+}
