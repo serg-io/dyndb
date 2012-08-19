@@ -62,7 +62,13 @@ More examples can be found in `tests/operations.js`
 API Docs
 --------
 
-Consult the `docs/index.html` for detailed documentation about how to use DynDB
+Consult the [API Docs](http://serg-io.github.com/dyndb/) for detailed documentation about how to use DynDB
+
+DynamoDB Docs
+-------------
+
+Consult the [DynamoDB documentation](http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/operationlist.html) for details about all the available operations and the structure
+of their request bodies.
 
 Released under the BSD License
 ----------------------------------
