@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/serg-io/dyndb.png)](http://travis-ci.org/serg-io/dyndb)
 DynDB
 =====
 
