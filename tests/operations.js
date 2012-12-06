@@ -12,7 +12,7 @@ function waitForActiveTable(tableName, callback, count) {
 			setTimeout(_.bind(waitForActiveTable, this), 6000, tableName, callback, 1);
 		} else if (count < 10) setTimeout(_.bind(waitForActiveTable, this), 6000, tableName, callback, count + 1);
 		else callback({message: 'Table ' + tableName + ' did not become "ACTIVE" within a minute after being created'});
-	});
+	}, this);
 }
 
 
@@ -47,6 +47,7 @@ exports.tables = {
 
 		_.each(tables, function(table) {
 			this.dyndb.request('CreateTable', table, function(error, json, httpRes) {
+				if (error) console.log(json);
 				test.ok(!error, error && _.isString(error.message) ? error.message : JSON.stringify(error));
 				done();
 			});
