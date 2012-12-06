@@ -10,6 +10,29 @@ Execute the following command at the root of your project:
 
 	npm install dyndb
 
+AWS Credentials
+---------------
+
+You can set the credentials using any of the following methods:
+
+1.	Manually passing the credentials to the constructor:
+	
+		var dyndb = new DynDB('accessKeyID', 'secretAccessKey', 'awsRegion');
+
+2.	Using the following environment variables and calling the constructor without any arguments:
+	* `AWS_ACCESS_KEY_ID`
+	* `AWS_SECRET_ACCESS_KEY`
+	* `AWS_REGION`
+
+3.	DynDB supports IAM Roles. To use IAM Role credentials [assign a role to the EC2](http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances) instance when you launch it.
+	DynDB will automatically get the credentials from the [EC2 metadata service](http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html).
+	Do not pass the `accessKeyID` and `secretAccessKey` to the constructor when using IAM Roles.
+
+		var dyndb = new DynDB(); // Default region: us-east-1
+
+		// You can specify whatever region you need
+		var dyndb = new DynDB(null, null, 'us-west-1');
+
 Usage
 -----
 
