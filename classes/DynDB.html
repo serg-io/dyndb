@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>DynDB</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.5.1&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -92,7 +92,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;dyndb.js.html#l13"><code>dyndb.js:13</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;dyndb.js.html#l14"><code>dyndb.js:14</code></a>
         </div>
     
 
@@ -147,6 +147,12 @@ it gets the keys and region from the following environment variables:</p>
                     
                 </li>
             
+                <li class="arg">
+                    
+                        <code class="optional">[securityToken]</code>
+                    
+                </li>
+            
             </ul><span class="paren">)</span>
         </div>
     
@@ -176,7 +182,7 @@ it gets the keys and region from the following environment variables:</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l13"><code>dyndb.js:13</code></a>
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l14"><code>dyndb.js:14</code></a>
         
         </p>
 
@@ -244,6 +250,22 @@ it gets the keys and region from the following environment variables:</p>
                     
                 </li>
             
+                <li class="param">
+                    
+                        <code class="param-name optional">[securityToken]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The security token</p>
+                    </div>
+
+                    
+                </li>
+            
             </ul>
         </div>
     
@@ -288,7 +310,14 @@ it gets the keys and region from the following environment variables:</p>
                             </li>
                         
                             <li class="index-item method private">
-                                <a href="#method_hmac">hmac</a>
+                                <a href="#method_getEC2IAMRole">getEC2IAMRole</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getEC2IAMSecurityCredentials">getEC2IAMSecurityCredentials</a>
 
                                 
                                 
@@ -301,6 +330,20 @@ it gets the keys and region from the following environment variables:</p>
                                 
                             </li>
                         
+                            <li class="index-item method private">
+                                <a href="#method_httpRequest">httpRequest</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_needsToLoadEC2IAMRoleCredentials">needsToLoadEC2IAMRoleCredentials</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method">
                                 <a href="#method_request">request</a>
 
@@ -308,8 +351,22 @@ it gets the keys and region from the following environment variables:</p>
                                 
                             </li>
                         
+                            <li class="index-item method private">
+                                <a href="#method_sendRequest">sendRequest</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method">
                                 <a href="#method_setup">setup</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_sha256Hash">sha256Hash</a>
 
                                 
                                 
@@ -333,7 +390,56 @@ it gets the keys and region from the following environment variables:</p>
                     <ul class="index-list properties">
                         
                             <li class="index-item property private">
+                                <a href="#property_accessKey">accessKey</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
                                 <a href="#property_API_VERSION">API_VERSION</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property_credentialsExpiration">credentialsExpiration</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property_EC2_METADATA_HOST">EC2_METADATA_HOST</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property_region">region</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property_secretKey">secretKey</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property_SECURITY_CREDENTIALS_RESOURCE">SECURITY_CREDENTIALS_RESOURCE</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
+                                <a href="#property_securityToken">securityToken</a>
 
                                 
                                 
@@ -408,7 +514,7 @@ it gets the keys and region from the following environment variables:</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l141"><code>dyndb.js:141</code></a>
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l212"><code>dyndb.js:212</code></a>
         
         </p>
 
@@ -461,6 +567,205 @@ it gets the keys and region from the following environment variables:</p>
                 
             </div>
         </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getEC2IAMRole" class="method item private">
+    <h3 class="name"><code>getEC2IAMRole</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l306"><code>dyndb.js:306</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the EC2 IAM role name from the metadata service.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Callback function that receives the role returned by the metadata service.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_getEC2IAMSecurityCredentials" class="method item private">
+    <h3 class="name"><code>getEC2IAMSecurityCredentials</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>role</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l319"><code>dyndb.js:319</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Gets the security credentials from the metadata service.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">role</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>IAM role name.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Callback function that receives the parsed credentials object returned by the metadata service.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
     
 
     
@@ -527,7 +832,7 @@ it gets the keys and region from the following environment variables:</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l74"><code>dyndb.js:74</code></a>
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l142"><code>dyndb.js:142</code></a>
         
         </p>
 
@@ -616,8 +921,737 @@ it gets the keys and region from the following environment variables:</p>
 </div>
 
                 
-                    <div id="method_hmac" class="method item private">
-    <h3 class="name"><code>hmac</code></h3>
+                    <div id="method_httpRequest" class="method item private">
+    <h3 class="name"><code>httpRequest</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>options</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>body</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[callback]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[useHttps=false]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l226"><code>dyndb.js:226</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>This is the method that send the actual HTTP requests, caches the response, and executes the callback after the response has been received.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">options</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The <a href="http://nodejs.org/api/http.html#http_http_request_options_callback">HTTP options</a> to use when sending the request.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">body</code>
+                        <span class="type">Buffer | String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The request's body. Must be a <a href="http://nodejs.org/api/buffer.html">Buffer</a> or a String.
+Set it to <code>null</code>, <code>undefined</code>, <code>false</code>, or <code>''</code> to send a request with no body (a <code>GET</code> request for instance).</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Callback function to call after the response has been received.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[useHttps=false]</code>
+                        <span class="type">Boolean</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Set this to true to use HTTPS.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_needsToLoadEC2IAMRoleCredentials" class="method item private">
+    <h3 class="name"><code>needsToLoadEC2IAMRoleCredentials</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l340"><code>dyndb.js:340</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Helper function that returns <code>true</code> if getting the security credentials from the metadata service is needed or <code>false</code> otherwise.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_request" class="method item">
+    <h3 class="name"><code>request</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>operationName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[body=&#x27;{}&#x27;]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[callback]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[context]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l352"><code>dyndb.js:352</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Sends a request to Amazon DynamoDB</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">operationName</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Name of the DynamoDB operation to request. Consult
+<a href="http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/operationlist.html" title="DynamoDB Operations">DynamoDB documentation</a>
+for a list of available operations</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[body=&#x27;{}&#x27;]</code>
+                        <span class="type">Object | String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Body of the request to send. If it's not a string, it is converted into a string using <code>JSON.stringify()</code>.
+Consult <a href="http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/operationlist.html" title="DynamoDB Operations">DynamoDB documentation</a>
+for details about the body for each type of operation</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Callback function to execute after the response has been received or when an error was triggered during the request.
+The callback function should take the following arguments:</p>
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">error</code>
+                                    <span class="type">Object</span>
+                                
+
+                                <div class="param-description">
+                                    <p>This can be:</p>
+
+<ol>
+<li>The error object passed by the underlying http request if the 'error' event was triggered</li>
+<li>The response's status code, if it's not <code>200</code></li>
+<li>Exception object thrown by <code>JSON.parse()</code></li>
+<li>Undefined if there was no error</li>
+</ol>
+                                </div>
+
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">json</code>
+                                    <span class="type">Object | String</span>
+                                
+
+                                <div class="param-description">
+                                    <p>The parsed JSON response or a string if the response is not a valid JSON string</p>
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[context]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The <code>context</code> in which the callback should be executed, meaning that whenever the callback function is called,
+the value of <code>this</code>, inside the callback, will be <code>context</code>. If no <code>context</code> is given, the value of <code>this</code> would be the underlying request's
+<a href="http://nodejs.org/api/http.html#http_http_clientresponse">http.ClientResponse</a> object, which contains data like <code>statusCode</code> and <code>headers</code></p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_sendRequest" class="method item private">
+    <h3 class="name"><code>sendRequest</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>operationName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[body=&#x27;{}&#x27;]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[callback]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[context=httpResponseObject]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l261"><code>dyndb.js:261</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Underlying method that builds the request before sending it and relays the response to the callback.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">operationName</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Name of the DynamoDB operation to request.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[body=&#x27;{}&#x27;]</code>
+                        <span class="type">Object | String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Body of the request.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[callback]</code>
+                        <span class="type">Function</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Callback function to call after receiving the response.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[context=httpResponseObject]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Context in which the callback should be executed.
+Defaults to the underlying HTTP response object.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_setup" class="method item">
+    <h3 class="name"><code>setup</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[accessKeyID]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[secretAccessKey]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[region=&#x27;us-east-1&#x27;]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[securityToken]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag chainable">chainable</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l118"><code>dyndb.js:118</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Sets the access keys and region to use for every request. If no arguments are passed,
+it gets the keys and region from the following environment variables:</p>
+
+<ol>
+<li><code>AWS_ACCESS_KEY_ID</code></li>
+<li><code>AWS_SECRET_ACCESS_KEY</code></li>
+<li><code>AWS_REGION</code></li>
+</ol>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[accessKeyID]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Your AWS access key ID</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[secretAccessKey]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Your AWS secret access key</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[region=&#x27;us-east-1&#x27;]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The AWS region you would like to use</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[securityToken]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The security token</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_sha256Hash" class="method item private">
+    <h3 class="name"><code>sha256Hash</code></h3>
 
     
         <div class="args">
@@ -676,7 +1710,7 @@ it gets the keys and region from the following environment variables:</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l90"><code>dyndb.js:90</code></a>
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l158"><code>dyndb.js:158</code></a>
         
         </p>
 
@@ -766,345 +1800,6 @@ it gets the keys and region from the following environment variables:</p>
 </div>
 
                 
-                    <div id="method_request" class="method item">
-    <h3 class="name"><code>request</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>operationName</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[body=&#x27;{}&#x27;]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[callback]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[context]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l156"><code>dyndb.js:156</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Sends a request to Amazon DynamoDB</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">operationName</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Name of the DynamoDB operation to request. Consult
-<a href="http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/operationlist.html" title="DynamoDB Operations">DynamoDB documentation</a>
-for a list of available operations</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[body=&#x27;{}&#x27;]</code>
-                        <span class="type">Object | String</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Body of the request to send. If it's not a string, it is converted into a string using <code>JSON.stringify()</code>.
-Consult <a href="http://docs.amazonwebservices.com/amazondynamodb/latest/developerguide/operationlist.html" title="DynamoDB Operations">DynamoDB documentation</a>
-for details about the body for each type of operation</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[callback]</code>
-                        <span class="type">Function</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Callback function to execute after the response has been received or when an error was triggered during the request.
-The callback function should take the following arguments:</p>
-                    </div>
-
-                    
-                        <ul class="params-list">
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">error</code>
-                                    <span class="type">Object</span>
-                                
-
-                                <div class="param-description">
-                                    <p>This can be:</p>
-
-<ol>
-<li>An object, the parsed DynamoDB's error JSON string response, if the response's status code was not 200</li>
-<li>The error object passed by the underlying http request if the 'error' event was triggered</li>
-<li>Undefined if there was no error</li>
-</ol>
-                                </div>
-
-                                
-                            </li>
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">json</code>
-                                    <span class="type">Object | String</span>
-                                
-
-                                <div class="param-description">
-                                    <p>The parsed JSON response or a string if the response is not a valid JSON string</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                        </ul>
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[context]</code>
-                        <span class="type">Object</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The <code>context</code> in which the callback should be executed, meaning that whenever the callback function is called,
-the value of <code>this</code>, inside the callback, will be <code>context</code>. If no <code>context</code> is given, the value of <code>this</code> would be the underlying request's
-<a href="http://nodejs.org/api/http.html#http_http_clientresponse">http.ClientResponse</a> object, which contains data like <code>statusCode</code> and <code>headers</code></p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_setup" class="method item">
-    <h3 class="name"><code>setup</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code class="optional">[accessKeyID]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[secretAccessKey]</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code class="optional">[region=&#x27;us-east-1&#x27;]</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag chainable">chainable</span>
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l53"><code>dyndb.js:53</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Sets the access keys and region to use for every request. If no arguments are passed,
-it gets the keys and region from the following environment variables:</p>
-
-<ol>
-<li><code>AWS_ACCESS_KEY_ID</code></li>
-<li><code>AWS_SECRET_ACCESS_KEY</code></li>
-<li><code>AWS_REGION</code></li>
-</ol>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[accessKeyID]</code>
-                        <span class="type">String</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Your AWS access key ID</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[secretAccessKey]</code>
-                        <span class="type">String</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Your AWS secret access key</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name optional">[region=&#x27;us-east-1&#x27;]</code>
-                        <span class="type">String</span>
-                        <span class="flag optional" title="This parameter is optional.">optional</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The AWS region you would like to use</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method_signRequest" class="method item private">
     <h3 class="name"><code>signRequest</code></h3>
 
@@ -1155,7 +1850,7 @@ it gets the keys and region from the following environment variables:</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l106"><code>dyndb.js:106</code></a>
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l174"><code>dyndb.js:174</code></a>
         
         </p>
 
@@ -1166,7 +1861,8 @@ it gets the keys and region from the following environment variables:</p>
     </div>
 
     <div class="description">
-        <p>Signs a given request. Follows the <a href="http://docs.amazonwebservices.com/general/latest/gr/signature-version-4.html">AWS signature v4</a> specs to add the <code>Authorization</code> header in <code>httpOpts</code></p>
+        <p>Signs a given request. Follows the <a href="http://docs.amazonwebservices.com/general/latest/gr/signature-version-4.html">AWS signature v4</a>
+specs to add the <code>Authorization</code> header in <code>httpOpts</code></p>
     </div>
 
     
@@ -1223,6 +1919,52 @@ it gets the keys and region from the following environment variables:</p>
                 <h2 class="off-left">Properties</h2>
 
                 
+                    <div id="property_accessKey" class="property item private">
+    <h3 class="name"><code>accessKey</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l82"><code>dyndb.js:82</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>AWS Access Key ID.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_API_VERSION" class="property item private">
     <h3 class="name"><code>API_VERSION</code></h3>
     <span class="type">String</span>
@@ -1250,7 +1992,7 @@ it gets the keys and region from the following environment variables:</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l39"><code>dyndb.js:39</code></a>
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l41"><code>dyndb.js:41</code></a>
         
         </p>
 
@@ -1261,6 +2003,286 @@ it gets the keys and region from the following environment variables:</p>
 
     <div class="description">
         <p>DynamoDB's API version used in the HTTP headers of every request</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_credentialsExpiration" class="property item private">
+    <h3 class="name"><code>credentialsExpiration</code></h3>
+    <span class="type">Date</span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l109"><code>dyndb.js:109</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Expiration date of the current credentials obtained from the EC2 metadata service.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_EC2_METADATA_HOST" class="property item private">
+    <h3 class="name"><code>EC2_METADATA_HOST</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l51"><code>dyndb.js:51</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>IP address of the EC2 metadata service.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_region" class="property item private">
+    <h3 class="name"><code>region</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l73"><code>dyndb.js:73</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>AWS region.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_secretKey" class="property item private">
+    <h3 class="name"><code>secretKey</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l91"><code>dyndb.js:91</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>AWS Secret Access Key.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_SECURITY_CREDENTIALS_RESOURCE" class="property item private">
+    <h3 class="name"><code>SECURITY_CREDENTIALS_RESOURCE</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l61"><code>dyndb.js:61</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Path to the <code>security-credentials</code> within the EC2 metadata service.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_securityToken" class="property item private">
+    <h3 class="name"><code>securityToken</code></h3>
+    <span class="type">String</span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l100"><code>dyndb.js:100</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>AWS Security Token, used only when the credentials come from the EC2 metadata service.</p>
     </div>
 
     
@@ -1298,7 +2320,7 @@ it gets the keys and region from the following environment variables:</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;dyndb.js.html#l29"><code>dyndb.js:29</code></a>
+        <a href="..&#x2F;files&#x2F;dyndb.js.html#l31"><code>dyndb.js:31</code></a>
         
         </p>
 

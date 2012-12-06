@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>dyndb.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.5.1&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
@@ -89,15 +89,16 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
-DynDB 0.0.3 - (c) 2012 Sergio Alcantara
+DynDB 0.1.0 - (c) 2012 Sergio Alcantara
 Provides the base DynDB constructor
 
 @module dyndb
 @author Sergio Alcantara
  *&#x2F;
 
-var _ = require(&#x27;underscore&#x27;),
+var http = require(&#x27;http&#x27;),
 	https = require(&#x27;https&#x27;),
+	_ = require(&#x27;underscore&#x27;),
 	crypto = require(&#x27;crypto&#x27;);
 
 &#x2F;**
@@ -114,6 +115,7 @@ it gets the keys and region from the following environment variables:
 @param {String} [accessKeyID] Your AWS access key ID
 @param {String} [secretAccessKey] Your AWS secret access key
 @param {String} [region=&#x27;us-east-1&#x27;] The AWS region you would like to use
+@param {String} [securityToken] The security token
  *&#x2F;
 function DynDB() {
 	&#x2F;**
@@ -136,9 +138,72 @@ function DynDB() {
 	 *&#x2F;
 	var API_VERSION = &#x27;20111205&#x27;;
 
-	var accessKey = null,
-		secretKey = null,
-		region = null;
+	&#x2F;**
+	IP address of the EC2 metadata service.
+
+	@property EC2_METADATA_HOST
+	@type String
+	@final
+	@private
+	*&#x2F;
+	var EC2_METADATA_HOST = &#x27;169.254.169.254&#x27;;
+
+	&#x2F;**
+	Path to the &#x60;security-credentials&#x60; within the EC2 metadata service.
+
+	@property SECURITY_CREDENTIALS_RESOURCE
+	@type String
+	@final
+	@private
+	*&#x2F;
+	var SECURITY_CREDENTIALS_RESOURCE = &#x27;&#x2F;latest&#x2F;meta-data&#x2F;iam&#x2F;security-credentials&#x2F;&#x27;;
+
+	var CREDENTIALS_EXPIRATION_THRESHOLD = 1000 * 60 * 5; &#x2F;&#x2F; 5 minutes in milliseconds
+
+	&#x2F;**
+	AWS region.
+
+	@property region
+	@type String
+	@private
+	*&#x2F;
+	var region = null;
+
+	&#x2F;**
+	AWS Access Key ID.
+
+	@property accessKey
+	@type String
+	@private
+	*&#x2F;
+	var accessKey = null;
+
+	&#x2F;**
+	AWS Secret Access Key.
+
+	@property secretKey
+	@type String
+	@private
+	*&#x2F;
+	var secretKey = null;
+
+	&#x2F;**
+	AWS Security Token, used only when the credentials come from the EC2 metadata service.
+
+	@property securityToken
+	@type String
+	@private
+	*&#x2F;
+	var securityToken = null;
+
+	&#x2F;**
+	Expiration date of the current credentials obtained from the EC2 metadata service.
+
+	@property credentialsExpiration
+	@type Date
+	@private
+	*&#x2F;
+	var credentialsExpiration = null;
 
 	&#x2F;**
 	Sets the access keys and region to use for every request. If no arguments are passed,
@@ -153,11 +218,14 @@ function DynDB() {
 	@param {String} [accessKeyID] Your AWS access key ID
 	@param {String} [secretAccessKey] Your AWS secret access key
 	@param {String} [region=&#x27;us-east-1&#x27;] The AWS region you would like to use
+	@param {String} [securityToken] The security token
 	 *&#x2F;
-	(this.setup = function(accessKeyID, secretAccessKey, awsRegion) {
+	(this.setup = function(accessKeyID, secretAccessKey, awsRegion, awsSecurityToken) {
+		region = awsRegion || process.env.AWS_REGION || &#x27;us-east-1&#x27;;
 		accessKey = accessKeyID || process.env.AWS_ACCESS_KEY_ID;
 		secretKey = secretAccessKey || process.env.AWS_SECRET_ACCESS_KEY;
-		region = awsRegion || process.env.AWS_REGION || &#x27;us-east-1&#x27;;
+		securityToken = awsSecurityToken || null;
+
 		return this;
 	}).apply(this, arguments);
 
@@ -180,7 +248,7 @@ function DynDB() {
 	&#x2F;**
 	Uses [Crypto.Hash](http:&#x2F;&#x2F;nodejs.org&#x2F;api&#x2F;crypto.html#crypto_class_hash) to calculate the SHA256 hash for the given data
 
-	@method hmac
+	@method sha256Hash
 	@private
 	@param {String} data The data from which to calculate the hash
 	@param {String} [dataEncoding=&#x27;binary&#x27;] The data&#x27;s encoding. Can be &#x60;&#x27;utf8&#x27;&#x60;, &#x60;&#x27;ascii&#x27;&#x60; or &#x60;&#x27;binary&#x27;&#x60;
@@ -194,7 +262,8 @@ function DynDB() {
 	}
 
 	&#x2F;**
-	Signs a given request. Follows the [AWS signature v4](http:&#x2F;&#x2F;docs.amazonwebservices.com&#x2F;general&#x2F;latest&#x2F;gr&#x2F;signature-version-4.html) specs to add the &#x60;Authorization&#x60; header in &#x60;httpOpts&#x60;
+	Signs a given request. Follows the [AWS signature v4](http:&#x2F;&#x2F;docs.amazonwebservices.com&#x2F;general&#x2F;latest&#x2F;gr&#x2F;signature-version-4.html)
+	specs to add the &#x60;Authorization&#x60; header in &#x60;httpOpts&#x60;
 
 	@method signRequest
 	@private
@@ -202,6 +271,8 @@ function DynDB() {
 	@param {Buffer} body The &#x60;Buffer&#x60; instance of the request body
 	 *&#x2F;
 	function signRequest(httpOpts, body) {
+		if (securityToken) httpOpts.headers[&#x27;x-amz-security-token&#x27;] = securityToken;
+
 		var headers = _.extend({host: httpOpts.host}, httpOpts.headers),
 			headerNames = _.sortBy(_.keys(headers), function(name) { return name.toLowerCase(); }),
 			isoDate = headers[&#x27;x-amz-date&#x27;],
@@ -237,10 +308,135 @@ function DynDB() {
 	@return {String} An ISO8601 basic date string
 	 *&#x2F;
 	function basicISODate(date) {
-		&#x2F;&#x2F; Can be done with str.replace(&#x2F;(-|:|\.\d{3}Z$)&#x2F;g, &#x27;&#x27;), but substr() performs better
-		&#x2F;&#x2F; http:&#x2F;&#x2F;jsperf.com&#x2F;iso8601-date-basic-format
+		&#x2F;&#x2F; Can be done with &#x60;str.replace(&#x2F;(-|:|\.\d{3}Z$)&#x2F;g, &#x27;&#x27;)&#x60;, but &#x60;substr()&#x60; performs better: http:&#x2F;&#x2F;jsperf.com&#x2F;iso8601-date-basic-format
 		var str = (date || new Date()).toISOString();
 		return str.substr(0, 4) + str.substr(5, 2) + str.substr(8, 5) + str.substr(14, 2) + str.substr(17, 2) + &#x27;Z&#x27;;
+	}
+
+	&#x2F;**
+	This is the method that send the actual HTTP requests, caches the response, and executes the callback after the response has been received.
+
+	@method httpRequest
+	@private
+	@param {Object} options The [HTTP options](http:&#x2F;&#x2F;nodejs.org&#x2F;api&#x2F;http.html#http_http_request_options_callback) to use when sending the request.
+	@param {Buffer|String} body The request&#x27;s body. Must be a [Buffer](http:&#x2F;&#x2F;nodejs.org&#x2F;api&#x2F;buffer.html) or a String.
+	Set it to &#x60;null&#x60;, &#x60;undefined&#x60;, &#x60;false&#x60;, or &#x60;&#x27;&#x27;&#x60; to send a request with no body (a &#x60;GET&#x60; request for instance).
+	@param {Function} [callback] Callback function to call after the response has been received.
+	@param {Boolean} [useHttps=false] Set this to true to use HTTPS.
+	*&#x2F;
+	function httpRequest(options, body, callback, useHttps) {
+		&#x2F;&#x2F; The &#x60;processResponse&#x60; callback should only be called once. The [http docs](http:&#x2F;&#x2F;nodejs.org&#x2F;api&#x2F;http.html#http_event_close_1)
+		&#x2F;&#x2F; say that a &#x27;close&#x27; event can be fired after the &#x27;end&#x27; event has been fired. To ensure that the &#x60;processResponse&#x60; callback
+		&#x2F;&#x2F; is called only once it is wrapped by &#x60;_.once()&#x60;
+		var processResponse = _.once(function(error, responseBody, httpResponse) {
+			if (!error &amp;&amp; httpResponse &amp;&amp; httpResponse.statusCode !== 200) error = httpResponse.statusCode;
+			if (_.isFunction(callback)) callback(error, responseBody, httpResponse);
+		});
+
+		var request = (useHttps === true ? https : http).request(options, function(httpResponse) {
+			var responseBody = &#x27;&#x27;;
+			httpResponse.on(&#x27;data&#x27;, function(data) {
+				responseBody += data.toString(); &#x2F;&#x2F; &#x27;data&#x27; can be a String or a Buffer object
+			}).on(&#x27;close&#x27;, function(error) {
+				processResponse(error, responseBody, httpResponse);
+			}).on(&#x27;end&#x27;, function() {
+				processResponse(undefined, responseBody, httpResponse);
+			});
+		}).on(&#x27;error&#x27;, processResponse);
+
+		if (!_.isEmpty(body)) request.write(body);
+		request.end();
+	}
+
+	&#x2F;**
+	Underlying method that builds the request before sending it and relays the response to the callback.
+
+	@method sendRequest
+	@private
+	@param {String} operationName Name of the DynamoDB operation to request.
+	@param {Object|String} [body=&#x27;{}&#x27;] Body of the request.
+	@param {Function} [callback] Callback function to call after receiving the response.
+	@param {Object} [context=httpResponseObject] Context in which the callback should be executed.
+	Defaults to the underlying HTTP response object.
+	*&#x2F;
+	function sendRequest(operationName, body, callback, context) {
+		if (_.isFunction(body)) {
+			context = callback;
+			callback = body;
+			body = undefined;
+		}
+		body || (body = {});
+		body = new Buffer(_.isString(body) ? body : JSON.stringify(body));
+
+		var httpOpts = {
+			host: SERVICE_NAME.toLowerCase() + &#x27;.&#x27; + region + &#x27;.amazonaws.com&#x27;,
+			port: 443,
+			path: &#x27;&#x2F;&#x27;,
+			method: &#x27;POST&#x27;,
+			headers: {
+				&#x27;x-amz-date&#x27;: basicISODate(),
+				&#x27;x-amz-target&#x27;: SERVICE_NAME + &#x27;_&#x27; + API_VERSION + &#x27;.&#x27; + operationName,
+				&#x27;Content-Type&#x27;: &#x27;application&#x2F;x-amz-json-1.0&#x27;
+			}
+		};
+		signRequest(httpOpts, body);
+
+		httpRequest(httpOpts, body, function(error, responseBody, httpResponse) {
+			var json;
+			try {
+				json = JSON.parse(responseBody);
+			} catch (parseError) {
+				if (!error) error = parseError;
+			}
+
+			if (_.isFunction(callback)) callback.call(context || httpResponse, error, json || responseBody);
+		}, true);
+	}
+
+	&#x2F;**
+	Gets the EC2 IAM role name from the metadata service.
+
+	@method getEC2IAMRole
+	@private
+	@param {Function} callback Callback function that receives the role returned by the metadata service.
+	*&#x2F;
+	function getEC2IAMRole(callback) {
+		httpRequest({host: EC2_METADATA_HOST, path: SECURITY_CREDENTIALS_RESOURCE}, null, function(error, role, httpResponse) {
+			callback(error, _.isString(role) ? role.trim() : role, httpResponse);
+		});
+	}
+
+	&#x2F;**
+	Gets the security credentials from the metadata service.
+
+	@method getEC2IAMSecurityCredentials
+	@private
+	@param {String} role IAM role name.
+	@param {Function} callback Callback function that receives the parsed credentials object returned by the metadata service.
+	*&#x2F;
+	function getEC2IAMSecurityCredentials(role, callback) {
+		httpRequest({host: EC2_METADATA_HOST, path: SECURITY_CREDENTIALS_RESOURCE + role}, null, function(error, jsonStr, httpResponse) {
+			var credentials;
+			try {
+				credentials = JSON.parse(jsonStr);
+			} catch (parseError) {
+				if (!error) error = parseError;
+			}
+
+			callback(error, credentials, httpResponse);
+		});
+	}
+
+	&#x2F;**
+	Helper function that returns &#x60;true&#x60; if getting the security credentials from the metadata service is needed or &#x60;false&#x60; otherwise.
+
+	@method needsToLoadEC2IAMRoleCredentials
+	@private
+	*&#x2F;
+	function needsToLoadEC2IAMRoleCredentials() {
+		if (!accessKey || !secretKey) return true;
+		if (credentialsExpiration === null) return false;
+		return (credentialsExpiration.getTime() - Date.now()) &lt; CREDENTIALS_EXPIRATION_THRESHOLD;
 	}
 
 	&#x2F;**
@@ -258,9 +454,10 @@ function DynDB() {
 	The callback function should take the following arguments:
 		@param {Object} callback.error This can be:
 
-	1. An object, the parsed DynamoDB&#x27;s error JSON string response, if the response&#x27;s status code was not 200
-	2. The error object passed by the underlying http request if the &#x27;error&#x27; event was triggered
-	3. Undefined if there was no error
+	1. The error object passed by the underlying http request if the &#x27;error&#x27; event was triggered
+	2. The response&#x27;s status code, if it&#x27;s not &#x60;200&#x60;
+	3. Exception object thrown by &#x60;JSON.parse()&#x60;
+	4. Undefined if there was no error
 
 		@param {Object|String} callback.json The parsed JSON response or a string if the response is not a valid JSON string
 	@param {Object} [context] The &#x60;context&#x60; in which the callback should be executed, meaning that whenever the callback function is called,
@@ -268,52 +465,30 @@ function DynDB() {
 	[http.ClientResponse](http:&#x2F;&#x2F;nodejs.org&#x2F;api&#x2F;http.html#http_http_clientresponse) object, which contains data like &#x60;statusCode&#x60; and &#x60;headers&#x60;
 	 *&#x2F;
 	this.request = function(operationName, body, callback, context) {
-		if (_.isFunction(body)) {
-			context = callback;
-			callback = body;
-			body = undefined;
-		}
-		body || (body = &#x27;{}&#x27;);
-		body = new Buffer(_.isString(body) ? body : JSON.stringify(body));
+		if (needsToLoadEC2IAMRoleCredentials()) {
+			var _this = this,
+				_arguments = arguments;
 
-		&#x2F;&#x2F; The &#x60;complete&#x60; callback should only be called once. The [http docs](http:&#x2F;&#x2F;nodejs.org&#x2F;api&#x2F;http.html#http_event_close_1)
-		&#x2F;&#x2F; say that a &#x27;close&#x27; event can be fired after the &#x27;end&#x27; event has been fired. To ensure that the &#x60;complete&#x60; callback
-		&#x2F;&#x2F; is called only once it is wrapped by &#x60;_.once()&#x60;
-		var complete = _.once(function(error, json, httpResponse) {
-			try {
-				if (!_.isEmpty(json)) json = JSON.parse(json);
-			} catch (e) {}
+			getEC2IAMRole(function(error, role, httpResponse) {
+				getEC2IAMSecurityCredentials(role, function(error, credentials, httpResponse) {
+					if (!credentials || !credentials.AccessKeyId || !credentials.SecretAccessKey) {
+						throw &#x27;AWS credentials not set. &#x27; +
+							&#x27;Please set AWS credentials manually, using environment variables, or using EC2 IAM roles. &#x27; +
+							&#x27;See documentation for details.&#x27;;
+					}
 
-			if (httpResponse &amp;&amp; httpResponse.statusCode !== 200) error = json;
+					accessKey = credentials.AccessKeyId;
+					secretKey = credentials.SecretAccessKey;
+					securityToken = credentials.Token;
+					credentialsExpiration = new Date(credentials.Expiration);
 
-			if (_.isFunction(callback)) callback.call(context || httpResponse, error, json);
-		});
-
-		var httpOpts = {
-			host: SERVICE_NAME.toLowerCase() + &#x27;.&#x27; + region + &#x27;.amazonaws.com&#x27;,
-			port: 443,
-			path: &#x27;&#x2F;&#x27;,
-			method: &#x27;POST&#x27;,
-			headers: {
-				&#x27;x-amz-date&#x27;: basicISODate(),
-				&#x27;x-amz-target&#x27;: SERVICE_NAME + &#x27;_&#x27; + API_VERSION + &#x27;.&#x27; + operationName,
-				&#x27;Content-Type&#x27;: &#x27;application&#x2F;x-amz-json-1.0&#x27;
-			}
-		};
-		signRequest(httpOpts, body);
-
-		var request = https.request(httpOpts, function(httpResponse) {
-			var jsonStr = &#x27;&#x27;;
-			httpResponse.on(&#x27;data&#x27;, function(data) {
-				jsonStr += data.toString(); &#x2F;&#x2F; &#x27;data&#x27; can be a String or a Buffer object
+					sendRequest.apply(_this, _arguments);
+				});
 			});
-			httpResponse.on(&#x27;close&#x27;, function(e) { complete(e, jsonStr, httpResponse); });
-			httpResponse.on(&#x27;end&#x27;, function() { complete(undefined, jsonStr, httpResponse); });
-		});
-		request.on(&#x27;error&#x27;, complete);
-		request.write(body);
-		request.end();
-
+		} else {
+			sendRequest.apply(this, arguments);
+		}
+	
 		return this;
 	};
 }

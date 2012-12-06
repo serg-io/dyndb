@@ -10,7 +10,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "dyndb",
             "name": "dyndb",
-            "description": "DynDB 0.0.3 - (c) 2012 Sergio Alcantara\nProvides the base DynDB constructor"
+            "description": "DynDB 0.1.0 - (c) 2012 Sergio Alcantara\nProvides the base DynDB constructor"
         }
     ]
 } };
