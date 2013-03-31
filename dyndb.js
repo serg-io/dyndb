@@ -1,5 +1,5 @@
 /**
-DynDB 0.1.0 - (c) 2012 Sergio Alcantara
+DynDB 0.2.0 - (c) 2013 Sergio Alcantara
 Provides the base DynDB constructor
 
 @module dyndb

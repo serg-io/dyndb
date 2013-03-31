@@ -1,3 +1,7 @@
+/**
+ * Use nodeunit to run this test.
+ */
+
 var _ = require('underscore'),
 	dataset = require('./dataset.js'),
 	DynDB = require(__dirname + '/../');
