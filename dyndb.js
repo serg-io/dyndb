@@ -130,7 +130,22 @@ function DynDB() {
 	@param {String} [region='us-east-1'] The AWS region you would like to use
 	@param {String} [securityToken] The security token
 	 */
-	(this.setup = function(accessKeyID, secretAccessKey, awsRegion, awsSecurityToken) {
+	(this.setup = function() {
+		var accessKeyID, secretAccessKey, awsRegion, awsSecurityToken;
+		if (_.isObject(arguments[0])) {
+			var args = arguments[0];
+			accessKeyID = args.accessKeyID;
+			secretAccessKey = args.secretAccessKey;
+			awsRegion = args.awsRegion;
+			awsSecurityToken = args.awsSecurityToken;
+			API_VERSION = args.API_VERSION || API_VERSION;
+		}
+		else {
+			accessKeyID = arguments[0];
+			secretAccessKey = arguments[1];
+			awsRegion = arguments[2];
+			awsSecurityToken = arguments[3];
+		}
 		region = awsRegion || process.env.AWS_REGION || 'us-east-1';
 		accessKey = accessKeyID || process.env.AWS_ACCESS_KEY_ID;
 		secretKey = secretAccessKey || process.env.AWS_SECRET_ACCESS_KEY;
