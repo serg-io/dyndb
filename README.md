@@ -19,9 +19,11 @@ You can set the credentials using any of the following methods:
 	
 		var dyndb = new DynDB('accessKeyID', 'secretAccessKey', 'awsRegion');
 		// -- OR -- 
-		var dyndb = new DynDB({accessKeyID: 'accessKeyID', 
-					secretAccessKey: 'secretAccessKey',
-					awsRegion: 'awsRegion'});
+		var dyndb = new DynDB({
+			accessKeyID: 'accessKeyID', 
+			secretAccessKey: 'secretAccessKey',
+			awsRegion: 'awsRegion'	
+		});
 
 2.	Using the following environment variables and calling the constructor without any arguments:
 	* `AWS_ACCESS_KEY_ID`
